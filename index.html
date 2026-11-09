@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SmartShuttle adalah demo platform pemesanan tiket bus antarkota dan simulasi pelacakan posisi bus. Seluruh data adalah data contoh.">
+  <meta name="theme-color" content="#1264E8">
+  <title>Beranda | SmartShuttle</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/data.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/notifications.js" defer></script>
+  <script src="js/seat-map.js" defer></script>
+  <script src="js/booking.js" defer></script>
+  <script src="js/tracking-data.js" defer></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+  <script src="js/tracking.js" defer></script>
+  <script src="js/dashboard.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-bus" viewBox="0 0 24 24">
+      <path d="M8 6v6"></path>
+      <path d="M15 6v6"></path>
+      <path d="M2 12h19.6"></path>
+      <path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3"></path>
+      <circle cx="7" cy="18" r="2"></circle>
+      <path d="M9 18h5"></path>
+      <circle cx="16" cy="18" r="2"></circle>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+      <path d="M5 12h14"></path>
+      <path d="m12 5 7 7-7 7"></path>
+    </symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+      <path d="M19 12H5"></path>
+      <path d="m12 5-7 7 7 7"></path>
+    </symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="7"></circle>
+      <path d="m20 20-3.5-3.5"></path>
+    </symbol>
+    <symbol id="icon-map-pin" viewBox="0 0 24 24">
+      <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="16" rx="2"></rect>
+      <path d="M16 3v4"></path>
+      <path d="M8 3v4"></path>
+      <path d="M3 11h18"></path>
+    </symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+    </symbol>
+    <symbol id="icon-ticket" viewBox="0 0 24 24">
+      <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path>
+      <path d="M13 5v2"></path>
+      <path d="M13 11v2"></path>
+      <path d="M13 17v2"></path>
+    </symbol>
+    <symbol id="icon-navigation" viewBox="0 0 24 24">
+      <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 7v5l3 2"></path>
+    </symbol>
+    <symbol id="icon-wifi" viewBox="0 0 24 24">
+      <path d="M5 12.55a11 11 0 0 1 14 0"></path>
+      <path d="M8.5 16.1a6 6 0 0 1 7 0"></path>
+      <path d="M12 20h.01"></path>
+      <path d="M2 8.82a15 15 0 0 1 20 0"></path>
+    </symbol>
+    <symbol id="icon-armchair" viewBox="0 0 24 24">
+      <path d="M5 11V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5"></path>
+      <path d="M3 13a2 2 0 0 1 4 0v3h10v-3a2 2 0 0 1 4 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"></path>
+      <path d="M6 21v-1"></path>
+      <path d="M18 21v-1"></path>
+    </symbol>
+    <symbol id="icon-snowflake" viewBox="0 0 24 24">
+      <path d="M12 2v20"></path>
+      <path d="m4.93 4.93 14.14 14.14"></path>
+      <path d="m19.07 4.93-14.14 14.14"></path>
+      <path d="M2 12h20"></path>
+    </symbol>
+    <symbol id="icon-plug" viewBox="0 0 24 24">
+      <path d="M12 22v-5"></path>
+      <path d="M9 8V2"></path>
+      <path d="M15 8V2"></path>
+      <path d="M18 8H6a2 2 0 0 0-2 2v1a6 6 0 0 0 6 6h4a6 6 0 0 0 6-6v-1a2 2 0 0 0-2-2Z"></path>
+    </symbol>
+    <symbol id="icon-coffee" viewBox="0 0 24 24">
+      <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+      <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+      <path d="M6 2v2"></path>
+      <path d="M10 2v2"></path>
+      <path d="M14 2v2"></path>
+    </symbol>
+    <symbol id="icon-shield-check" viewBox="0 0 24 24">
+      <path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"></path>
+      <path d="m9 12 2 2 4-4"></path>
+    </symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24">
+      <path d="M4 6h16"></path>
+      <path d="M4 12h16"></path>
+      <path d="M4 18h16"></path>
+    </symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24">
+      <path d="m18 6-12 12"></path>
+      <path d="m6 6 12 12"></path>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="m20 6-11 11-5-5"></path>
+    </symbol>
+    <symbol id="icon-check-circle" viewBox="0 0 24 24">
+      <path d="M21.8 10A10 10 0 1 1 17 3.34"></path>
+      <path d="m9 11 3 3L22 4"></path>
+    </symbol>
+    <symbol id="icon-alert-triangle" viewBox="0 0 24 24">
+      <path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z"></path>
+      <path d="M12 9v4"></path>
+      <path d="M12 17h.01"></path>
+    </symbol>
+    <symbol id="icon-info" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="M12 11v5"></path>
+      <path d="M12 8h.01"></path>
+    </symbol>
+    <symbol id="icon-x-circle" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"></circle>
+      <path d="m15 9-6 6"></path>
+      <path d="m9 9 6 6"></path>
+    </symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24">
+      <circle cx="12" cy="8" r="4"></circle>
+      <path d="M4 21a8 8 0 0 1 16 0"></path>
+    </symbol>
+    <symbol id="icon-swap" viewBox="0 0 24 24">
+      <path d="M8 3 4 7l4 4"></path>
+      <path d="M4 7h16"></path>
+      <path d="m16 21 4-4-4-4"></path>
+      <path d="M20 17H4"></path>
+    </symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24">
+      <polygon points="6 3 20 12 6 21 6 3"></polygon>
+    </symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24">
+      <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+      <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+    </symbol>
+    <symbol id="icon-rotate" viewBox="0 0 24 24">
+      <path d="M3 12a9 9 0 1 0 3-6.7L3 8"></path>
+      <path d="M3 3v5h5"></path>
+    </symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24">
+      <path d="m18 15-6-6-6 6"></path>
+    </symbol>
+    <symbol id="icon-route" viewBox="0 0 24 24">
+      <circle cx="6" cy="19" r="3"></circle>
+      <path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"></path>
+      <circle cx="18" cy="5" r="3"></circle>
+    </symbol>
+    <symbol id="icon-radio" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="2"></circle>
+      <path d="M16.24 7.76a6 6 0 0 1 0 8.49"></path>
+      <path d="M7.76 16.24a6 6 0 0 1 0-8.49"></path>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+      <path d="M4.93 19.07a10 10 0 0 1 0-14.14"></path>
+    </symbol>
+    <symbol id="icon-luggage" viewBox="0 0 24 24">
+      <rect x="5" y="6" width="14" height="15" rx="2"></rect>
+      <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
+      <path d="M9 10v7"></path>
+      <path d="M15 10v7"></path>
+    </symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+      <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+      <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+    </symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24">
+      <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+      <path d="M10 21h4"></path>
+    </symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V22h-4v-.08A1.7 1.7 0 0 0 8.97 20.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3v-4h.08A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 8.97 4.6 1.7 1.7 0 0 0 10 3.04V3h4v.08A1.7 1.7 0 0 0 15.03 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.56 1.03H21v4h-.08A1.7 1.7 0 0 0 19.4 15Z"></path>
+    </symbol>
+    <symbol id="icon-printer" viewBox="0 0 24 24">
+      <path d="M6 9V3h12v6"></path>
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+      <rect x="6" y="14" width="12" height="8" rx="1"></rect>
+    </symbol>
+  </svg>
+
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#/beranda" aria-label="SmartShuttle, kembali ke beranda">
+        <span class="brand__mark">
+          <svg class="icon" aria-hidden="true"><use href="#icon-bus"></use></svg>
+        </span>
+        <span class="brand__text">Smart<span>Shuttle</span></span>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navigasi utama">
+        <ul class="nav-list">
+          <li><a class="nav-link" data-route="beranda" href="#/beranda">Beranda</a></li>
+          <li><a class="nav-link" data-route="pesan" href="#/pesan">Pesan Tiket</a></li>
+          <li><a class="nav-link" data-route="lacak" href="#/lacak">Lacak Bus</a></li>
+          <li><a class="nav-link" data-route="tentang" href="#/tentang">Tentang</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="account-trigger" id="account-trigger" type="button" aria-label="Buka dashboard demo">
+          <span class="account-avatar" id="account-avatar" aria-hidden="true">RP</span>
+          <span class="account-label">Akun demo</span>
+          <span class="account-notif-badge" id="account-notif-badge" hidden>0</span>
+        </button>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Buka menu navigasi">
+          <svg class="icon icon--menu" aria-hidden="true"><use href="#icon-menu"></use></svg>
+          <svg class="icon icon--close" aria-hidden="true"><use href="#icon-x"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="home-section" id="beranda" data-section="beranda">
+      <div class="hero">
+        <div class="container hero__grid">
+          <div class="hero__content">
+            <span class="eyebrow">
+              <svg class="icon" aria-hidden="true"><use href="#icon-route"></use></svg>
+              Antarkota dalam satu platform
+            </span>
+            <h1 class="hero__title">Perjalanan Lebih Mudah Bersama <span>SmartShuttle</span></h1>
+            <p class="hero__description">Temukan alur pemesanan tiket bus antarkota yang terarah dan lihat simulasi posisi bus secara langsung. Semua fitur di sini menggunakan data demo yang tersimpan di browser Anda.</p>
+            <div class="hero__actions">
+              <a class="btn btn--primary btn--lg" href="#/pesan">
+                <svg class="icon" aria-hidden="true"><use href="#icon-ticket"></use></svg>
+                <span>Pesan Tiket Sekarang</span>
+                <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+              </a>
+              <a class="btn btn--secondary btn--lg" href="#/lacak">
+                <svg class="icon" aria-hidden="true"><use href="#icon-navigation"></use></svg>
+                <span>Lacak Bus</span>
+              </a>
+            </div>
+            <ul class="hero__meta" aria-label="Ringkasan data demo">
+              <li><strong>15</strong><span>koridor demo</span></li>
+              <li><strong>6</strong><span>kota tujuan</span></li>
+              <li><strong>100%</strong><span>simulasi lokal</span></li>
+            </ul>
+          </div>
+
+          <div class="hero__visual">
+            <div class="hero__art">
+              <div class="hero__glow" aria-hidden="true"></div>
+              <img class="hero__image" id="hero-bus-image" src="assets/bus-hero.svg" alt="Ilustrasi bus antarkota modern SmartShuttle berwarna biru" width="760" height="540">
+              <div class="hero__fallback" id="hero-image-fallback" hidden>
+                <svg class="icon" aria-hidden="true"><use href="#icon-bus"></use></svg>
+                <span>Ilustrasi bus SmartShuttle</span>
+              </div>
+              <div class="hero-trip-card">
+                <div class="hero-trip-card__top">
+                  <span class="live-label"><span class="live-dot" aria-hidden="true"></span>Contoh pelacakan</span>
+                  <span class="badge badge--orange">Demo</span>
+                </div>
+                <div class="hero-trip-card__route">
+                  <div>
+                    <span>Jakarta</span>
+                    <strong>06:30</strong>
+                  </div>
+                  <span class="mini-route" aria-hidden="true"><span></span></span>
+                  <div class="hero-trip-card__end">
+                    <span>Bandung</span>
+                    <strong>09:45</strong>
+                  </div>
+                </div>
+                <div class="progress-track progress-track--thin" aria-hidden="true">
+                  <span style="width: 42%"></span>
+                </div>
+                <p class="hero-trip-card__note">Perjalanan contoh · Bus dalam perjalanan</p>
+              </div>
+              <div class="hero__floating-badge">
+                <span class="feature-icon feature-icon--small">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
+                </span>
+                <div>
+                  <strong>Data demo</strong>
+                  <span>Tersimpan lokal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container search-area">
+        <form class="search-card" id="home-search-form" novalidate>
+          <div class="search-card__header">
+            <div>
+              <span class="eyebrow eyebrow--plain">Rencanakan perjalanan</span>
+              <h2>Cari bus antarkota</h2>
+            </div>
+            <span class="badge badge--orange">Pencarian bus demo</span>
+          </div>
+
+          <div class="search-grid">
+            <div class="search-field-group">
+              <div class="field">
+                <label class="form-label" for="search-origin">Kota asal</label>
+                <div class="input-with-icon">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+                  <select class="form-control" id="search-origin" name="origin" autocomplete="off" aria-describedby="search-origin-error" required></select>
+                </div>
+                <p class="field-error" id="search-origin-error" role="alert" hidden></p>
+              </div>
+
+              <button class="swap-button" id="search-swap" type="button" aria-label="Tukar kota asal dan tujuan">
+                <svg class="icon" aria-hidden="true"><use href="#icon-swap"></use></svg>
+              </button>
+
+              <div class="field">
+                <label class="form-label" for="search-destination">Kota tujuan</label>
+                <div class="input-with-icon">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+                  <select class="form-control" id="search-destination" name="destination" autocomplete="off" aria-describedby="search-destination-error" required></select>
+                </div>
+                <p class="field-error" id="search-destination-error" role="alert" hidden></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="form-label" for="search-date">Tanggal keberangkatan</label>
+              <div class="input-with-icon">
+                <svg class="icon" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+                <input class="form-control" type="date" id="search-date" name="date" aria-describedby="search-date-error" required>
+              </div>
+              <p class="field-error" id="search-date-error" role="alert" hidden></p>
+            </div>
+
+            <div class="field">
+              <label class="form-label" for="search-passengers">Penumpang</label>
+              <div class="input-with-icon">
+                <svg class="icon" aria-hidden="true"><use href="#icon-users"></use></svg>
+                <select class="form-control" id="search-passengers" name="passengers" aria-describedby="search-passengers-error" required>
+                  <option value="1">1 orang</option>
+                  <option value="2">2 orang</option>
+                  <option value="3">3 orang</option>
+                  <option value="4">4 orang</option>
+                  <option value="5">5 orang</option>
+                  <option value="6">6 orang</option>
+                </select>
+              </div>
+              <p class="field-error" id="search-passengers-error" role="alert" hidden></p>
+            </div>
+
+            <button class="btn btn--primary search-submit" type="submit">
+              <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+              <span>Cari Bus</span>
+            </button>
+          </div>
+
+          <p class="form-hint">Pilih rute, tanggal, dan jumlah penumpang untuk melihat bus demo yang tersedia. Seluruh jadwal dan operator bersifat simulasi.</p>
+        </form>
+
+        <ul class="hero-advantages" aria-label="Keunggulan SmartShuttle">
+          <li>
+            <span class="advantage-icon"><svg class="icon" aria-hidden="true"><use href="#icon-ticket"></use></svg></span>
+            <div><strong>Pemesanan mudah</strong><span>Alur formulir yang terarah dalam satu halaman.</span></div>
+          </li>
+          <li>
+            <span class="advantage-icon"><svg class="icon" aria-hidden="true"><use href="#icon-route"></use></svg></span>
+            <div><strong>Informasi perjalanan</strong><span>Rute, jadwal, terminal, dan kelas bus yang jelas.</span></div>
+          </li>
+          <li>
+            <span class="advantage-icon"><svg class="icon" aria-hidden="true"><use href="#icon-clock"></use></svg></span>
+            <div><strong>Perkiraan kedatangan</strong><span>Simulasi posisi bus beserta estimasi sisa perjalanan.</span></div>
+          </li>
+        </ul>
+      </div>
+
+      <section class="section section--white" aria-labelledby="how-title">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow--plain">Cara kerja</span>
+            <h2 class="section-title" id="how-title">Tiga langkah, perjalanan lebih siap</h2>
+            <p class="section-description">Alur demo dibuat sederhana agar Anda dapat mencoba seluruh proses tanpa membuat akun atau melakukan pembayaran.</p>
+          </div>
+
+          <div class="how-grid">
+            <article class="step-card">
+              <span class="step-number">01</span>
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg></span>
+              <h3>Tentukan rute</h3>
+              <p>Pilih kota asal, kota tujuan, tanggal, dan jumlah penumpang. SmartShuttle menampilkan jadwal demo yang sesuai.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">02</span>
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-armchair"></use></svg></span>
+              <h3>Pilih jadwal dan kursi</h3>
+              <p>Lihat kelas bus, jam keberangkatan, harga, dan pilih kursi. Data pemesanan disimpan hanya di browser Anda.</p>
+            </article>
+            <article class="step-card">
+              <span class="step-number">03</span>
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-navigation"></use></svg></span>
+              <h3>Lacak simulasi bus</h3>
+              <p>Masukkan kode tiket untuk melihat animasi perjalanan, status terakhir, dan perkiraan sisa waktu menuju tujuan.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="features-title">
+        <div class="container">
+          <div class="section-heading section-heading--left">
+            <div>
+              <span class="eyebrow eyebrow--plain">Keunggulan</span>
+              <h2 class="section-title" id="features-title">Dirancang agar perjalanan terasa lebih tenang</h2>
+            </div>
+            <p class="section-description">Fokus pada informasi penting, tanpa langkah yang membingungkan atau klaim yang berlebihan.</p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-ticket"></use></svg></span>
+              <h3>Pemesanan terarah</h3>
+              <p>Validasi kolom, ringkasan harga, dan konfirmasi modal membantu Anda memeriksa data sebelum menyimpan tiket demo.</p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-route"></use></svg></span>
+              <h3>Informasi perjalanan</h3>
+              <p>Terminal, durasi, kelas bus, fasilitas, dan jadwal ditampilkan konsisten dari pemesanan sampai pelacakan.</p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-clock"></use></svg></span>
+              <h3>Perkiraan kedatangan</h3>
+              <p>Simulasi memperbarui progres perjalanan, kecepatan contoh, titik transit, dan estimasi waktu tiba.</p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg></span>
+              <h3>Data tetap lokal</h3>
+              <p>Tidak ada backend. Tiket demo dan preferensi tersimpan di LocalStorage perangkat dan dapat dihapus kapan saja.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--white" aria-labelledby="fleet-title">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow eyebrow--plain">Armada demo</span>
+            <h2 class="section-title" id="fleet-title">Pilihan kelas bus antarkota</h2>
+            <p class="section-description">Tiga kelas contoh dengan fasilitas berbeda. Harga dan ketersediaan mengikuti jadwal demo pada formulir pemesanan.</p>
+          </div>
+
+          <div class="fleet-grid">
+            <article class="bus-card">
+              <div class="bus-card__banner">
+                <span class="badge badge--soft">Ekonomis</span>
+                <svg class="bus-card__art" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bus"></use></svg>
+              </div>
+              <div class="bus-card__body">
+                <div class="bus-card__title">
+                  <div>
+                    <h3>SmartShuttle Executive</h3>
+                    <p>Kursi 2–2 dengan ruang kaki nyaman untuk perjalanan reguler.</p>
+                  </div>
+                </div>
+                <ul class="amenity-list">
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-snowflake"></use></svg>AC</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-wifi"></use></svg>Wi-Fi</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-plug"></use></svg>USB Charger</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-armchair"></use></svg>Reclining Seat</li>
+                </ul>
+                <div class="bus-card__footer">
+                  <span>Mulai dari</span>
+                  <strong>Rp 110.000</strong>
+                </div>
+              </div>
+            </article>
+
+            <article class="bus-card bus-card--featured">
+              <div class="bus-card__banner">
+                <span class="badge badge--orange">Paling lengkap</span>
+                <svg class="bus-card__art" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bus"></use></svg>
+              </div>
+              <div class="bus-card__body">
+                <div class="bus-card__title">
+                  <div>
+                    <h3>SmartShuttle Prime</h3>
+                    <p>Kelas unggulan dengan kursi lebih lega dan fasilitas perjalanan.</p>
+                  </div>
+                </div>
+                <ul class="amenity-list">
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-snowflake"></use></svg>AC</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-wifi"></use></svg>Wi-Fi</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-coffee"></use></svg>Snack</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-luggage"></use></svg>Bagasi</li>
+                </ul>
+                <div class="bus-card__footer">
+                  <span>Mulai dari</span>
+                  <strong>Rp 145.000</strong>
+                </div>
+              </div>
+            </article>
+
+            <article class="bus-card">
+              <div class="bus-card__banner">
+                <span class="badge badge--soft">Perjalanan malam</span>
+                <svg class="bus-card__art" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-bus"></use></svg>
+              </div>
+              <div class="bus-card__body">
+                <div class="bus-card__title">
+                  <div>
+                    <h3>SmartShuttle Nightliner</h3>
+                    <p>Kelas sleeper untuk perjalanan malam yang lebih nyaman.</p>
+                  </div>
+                </div>
+                <ul class="amenity-list">
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-armchair"></use></svg>Sleeper Seat</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-wifi"></use></svg>Wi-Fi</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg>Selimut</li>
+                  <li><svg class="icon" aria-hidden="true"><use href="#icon-clock"></use></svg>Berangkat malam</li>
+                </ul>
+                <div class="bus-card__footer">
+                  <span>Mulai dari</span>
+                  <strong>Rp 200.000</strong>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--compact" aria-labelledby="cta-title">
+        <div class="container">
+          <div class="cta-band">
+            <div class="cta-band__content">
+              <span class="eyebrow eyebrow--light">Mulai dari sini</span>
+              <h2 id="cta-title">Coba pemesanan dan pelacakan dalam satu alur</h2>
+              <p>Pilih jadwal, pilih kursi, simpan tiket demo, lalu lacak simulasi perjalanannya menggunakan kode tiket.</p>
+            </div>
+            <div class="cta-band__actions">
+              <a class="btn btn--orange btn--lg" href="#/pesan">
+                <span>Pesan Tiket</span>
+                <svg class="icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+              </a>
+              <a class="btn btn--glass btn--lg" href="#/lacak">
+                <svg class="icon" aria-hidden="true"><use href="#icon-navigation"></use></svg>
+                <span>Lacak Bus</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section class="page-section results-section" id="hasil" data-section="hasil" hidden>
+      <div class="page-hero page-hero--results">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#/beranda">Beranda</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Hasil Pencarian</span>
+          </nav>
+          <div class="results-heading">
+            <div>
+              <span class="eyebrow eyebrow--plain">Hasil pencarian</span>
+              <h1>Pilih bus untuk perjalanan Anda</h1>
+              <p class="page-description" id="results-summary" aria-live="polite">Menghitung pilihan bus demo...</p>
+            </div>
+            <a class="btn btn--glass" id="results-edit-search" href="#/beranda">
+              <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+              <span>Ubah Pencarian</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container page-content results-content">
+        <div class="results-toolbar">
+          <div class="results-toolbar__summary">
+            <strong id="results-count" aria-live="polite">0 bus ditemukan</strong>
+            <p id="results-context">Lengkapi pencarian untuk melihat jadwal.</p>
+          </div>
+          <div class="results-sort">
+            <label class="form-label" for="results-sort">Urutkan</label>
+            <div class="select-wrap">
+              <select class="form-control" id="results-sort">
+                <option value="cheapest">Harga terendah</option>
+                <option value="departure">Keberangkatan paling awal</option>
+                <option value="fastest">Durasi terpendek</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-layout">
+          <aside class="panel filter-panel" aria-labelledby="filters-title">
+            <div class="filter-panel__header">
+              <div>
+                <span class="panel-kicker">Filter</span>
+                <h2 id="filters-title">Persempit hasil</h2>
+              </div>
+              <button class="btn btn--ghost btn--small" id="results-reset-filters" type="button">Reset</button>
+            </div>
+
+            <fieldset class="filter-group">
+              <legend>Operator</legend>
+              <div class="filter-options" id="filter-operators"></div>
+            </fieldset>
+
+            <fieldset class="filter-group">
+              <legend>Kelas bus</legend>
+              <div class="filter-options" id="filter-classes"></div>
+            </fieldset>
+
+            <fieldset class="filter-group">
+              <legend>Fasilitas</legend>
+              <div class="filter-options" id="filter-facilities"></div>
+            </fieldset>
+
+            <div class="notice-box notice-box--compact filter-note">
+              <svg class="icon" aria-hidden="true"><use href="#icon-info"></use></svg>
+              <p>Filter hanya bekerja pada bus yang tersedia untuk rute dan tanggal terpilih.</p>
+            </div>
+          </aside>
+
+          <div class="results-main">
+            <div class="result-list" id="results-list" role="list" aria-label="Daftar bus tersedia"></div>
+
+            <div class="empty-state results-empty" id="results-empty" hidden>
+              <span class="empty-state__icon">
+                <svg class="icon" aria-hidden="true"><use href="#icon-bus"></use></svg>
+              </span>
+              <h2>Belum ada bus untuk rute dan tanggal ini.</h2>
+              <p id="results-empty-description">Coba pilih tanggal lain, ubah rute, atau sesuaikan filter pencarian.</p>
+              <a class="btn btn--primary" id="results-empty-edit" href="#/beranda">
+                <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+                <span>Ubah Pencarian</span>
+              </a>
+            </div>
+
+            <p class="results-disclaimer">Semua operator, jadwal, harga, dan ketersediaan kursi pada halaman ini adalah data simulasi untuk keperluan demo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section bus-detail-section" id="detail-bus" data-section="detail-bus" hidden>
+      <div class="page-hero page-hero--detail">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#/beranda">Beranda</a>
+            <span aria-hidden="true">/</span>
+            <a href="#/hasil">Hasil Pencarian</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Detail Bus</span>
+          </nav>
+
+          <button class="detail-back" id="detail-back" type="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-left"></use></svg>
+            <span>Kembali ke Hasil</span>
+          </button>
+
+          <div class="detail-hero">
+            <div class="detail-hero__media">
+              <img id="detail-image" src="assets/bus-sinar-jaya.svg" alt="Ilustrasi bus demo" width="720" height="480">
+              <div class="detail-hero__fallback" id="detail-image-fallback" hidden>
+                <svg class="icon" aria-hidden="true"><use href="#icon-bus"></use></svg>
+                <span>Ilustrasi bus demo</span>
+              </div>
+              <span class="badge badge--orange detail-hero__badge" id="detail-status">Aktif</span>
+            </div>
+
+            <div class="detail-hero__content">
+              <div class="operator-heading">
+                <span class="operator-mark operator-mark--large" id="detail-initials" aria-hidden="true">SJ</span>
+                <div>
+                  <span class="eyebrow eyebrow--plain" id="detail-operator">Operator demo</span>
+                  <h1 id="detail-title">Detail bus</h1>
+                  <p class="page-description" id="detail-subtitle">Informasi perjalanan dan fasilitas bus.</p>
+                </div>
+              </div>
+
+              <ul class="detail-hero__facts">
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#icon-route"></use></svg>
+                  <span id="detail-route">Rute belum dipilih</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+                  <span id="detail-date">Tanggal belum dipilih</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true"><use href="#icon-users"></use></svg>
+                  <span id="detail-passengers">1 penumpang</span>
+                </li>
+              </ul>
+
+              <div class="detail-trip-times" aria-label="Ringkasan waktu perjalanan">
+                <div>
+                  <span>Berangkat</span>
+                  <strong id="detail-departure">—</strong>
+                  <small id="detail-departure-city">—</small>
+                </div>
+                <div class="detail-trip-times__duration">
+                  <span>Durasi</span>
+                  <strong id="detail-duration">—</strong>
+                  <small>estimasi</small>
+                </div>
+                <div>
+                  <span>Estimasi tiba</span>
+                  <strong id="detail-arrival">—</strong>
+                  <small id="detail-arrival-city">—</small>
+                </div>
+              </div>
+
+              <p class="detail-bus-id">ID bus demo: <strong id="detail-bus-id">—</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container page-content">
+        <div class="detail-layout">
+          <div class="detail-main">
+            <section class="panel detail-panel" aria-labelledby="detail-itinerary-title">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-kicker">Itinerary</span>
+                  <h2 id="detail-itinerary-title">Perjalanan Anda</h2>
+                </div>
+                <span class="badge badge--soft" id="detail-class">Kelas bus</span>
+              </div>
+              <ol class="detail-timeline" id="detail-timeline"></ol>
+            </section>
+
+            <section class="panel detail-panel detail-seat-panel" aria-labelledby="detail-seat-title">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-kicker">Pemilihan kursi</span>
+                  <h2 id="detail-seat-title">Pilih kursi Anda</h2>
+                </div>
+                <span class="badge badge--soft" id="detail-seat-capacity">—</span>
+              </div>
+
+              <p class="detail-seat-instruction" id="detail-seat-instruction">Pilih kursi sesuai jumlah penumpang sebelum melanjutkan.</p>
+
+              <ul class="seat-legend seat-legend--detailed" aria-label="Keterangan status kursi">
+                <li>
+                  <span class="legend-seat legend-seat--available" aria-hidden="true">○</span>
+                  <span><strong>Tersedia</strong><small>Bisa dipilih</small></span>
+                </li>
+                <li>
+                  <span class="legend-seat legend-seat--selected" aria-hidden="true">✓</span>
+                  <span><strong>Dipilih</strong><small>Klik untuk batal</small></span>
+                </li>
+                <li>
+                  <span class="legend-seat legend-seat--occupied" aria-hidden="true">×</span>
+                  <span><strong>Terisi</strong><small>Tidak bisa dipilih</small></span>
+                </li>
+              </ul>
+
+              <div class="seat-map-wrap seat-map-wrap--detail">
+                <div class="seat-map-host" id="detail-seat-map" role="group" aria-label="Denah kursi bus" aria-describedby="detail-seat-instruction detail-seat-hint detail-seat-error"></div>
+              </div>
+
+              <p class="seat-hint" id="detail-seat-hint" aria-live="polite">0 kursi dipilih.</p>
+              <p class="field-error" id="detail-seat-error" role="alert" hidden></p>
+
+              <div class="notice-box notice-box--compact detail-seat-notice">
+                <svg class="icon" aria-hidden="true"><use href="#icon-info"></use></svg>
+                <p>Status kursi adalah simulasi browser ini. Kursi terisi tidak dapat dipilih, dan pilihan tidak melakukan pemesanan nyata.</p>
+              </div>
+            </section>
+
+            <section class="panel detail-panel" aria-labelledby="detail-amenities-title">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-kicker">Di dalam bus</span>
+                  <h2 id="detail-amenities-title">Fasilitas perjalanan</h2>
+                </div>
+              </div>
+              <ul class="amenity-list amenity-list--detail" id="detail-amenities"></ul>
+            </section>
+
+            <section class="panel detail-panel" aria-labelledby="detail-info-title">
+              <div class="panel-header">
+                <div>
+                  <span class="panel-kicker">Informasi armada</span>
+                  <h2 id="detail-info-title">Detail layanan demo</h2>
+                </div>
+              </div>
+              <dl class="detail-info-grid">
+                <div><dt>Operator</dt><dd id="detail-info-operator">—</dd></div>
+                <div><dt>Nomor lambung</dt><dd id="detail-info-code">—</dd></div>
+                <div><dt>Plat kendaraan</dt><dd id="detail-info-plate">—</dd></div>
+                <div><dt>Pengemudi demo</dt><dd id="detail-info-driver">—</dd></div>
+                <div><dt>Kapasitas</dt><dd id="detail-info-capacity">—</dd></div>
+                <div><dt>Hari operasi</dt><dd id="detail-info-days">—</dd></div>
+                <div><dt>Terminal asal</dt><dd id="detail-info-origin">—</dd></div>
+                <div><dt>Terminal tujuan</dt><dd id="detail-info-destination">—</dd></div>
+              </dl>
+              <p class="detail-service-note" id="detail-service-note"></p>
+            </section>
+          </div>
+
+          <aside class="detail-sidebar">
+            <div class="detail-booking-card">
+              <span class="panel-kicker">Ringkasan pilihan</span>
+              <div class="detail-booking-card__price">
+                <strong id="detail-price">—</strong>
+                <span>per penumpang</span>
+              </div>
+              <dl class="detail-booking-card__rows">
+                <div><dt>Tanggal</dt><dd id="detail-side-date">—</dd></div>
+                <div><dt>Jadwal</dt><dd id="detail-side-schedule">—</dd></div>
+                <div><dt>Penumpang</dt><dd id="detail-side-passengers">—</dd></div>
+                <div>
+                  <dt>Kursi terpilih</dt>
+                  <dd><div class="selected-seat-list" id="detail-selected-seats"><span class="summary-empty">Belum ada kursi dipilih</span></div></dd>
+                </div>
+                <div><dt>Kursi tersisa</dt><dd id="detail-seat-count">—</dd></div>
+                <div><dt>Subtotal tiket</dt><dd id="detail-subtotal">—</dd></div>
+                <div><dt>Biaya layanan demo</dt><dd id="detail-service">—</dd></div>
+                <div class="detail-booking-card__total"><dt>Total keseluruhan</dt><dd id="detail-total">—</dd></div>
+              </dl>
+              <button class="btn btn--primary btn--block" id="detail-select" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#icon-ticket"></use></svg>
+                <span>Lanjutkan ke Pemesanan</span>
+              </button>
+              <button class="btn btn--secondary btn--block" id="detail-back-secondary" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#icon-arrow-left"></use></svg>
+                <span>Kembali ke Hasil</span>
+              </button>
+              <p class="form-hint">Total dihitung dari kursi yang dipilih. Biaya layanan demo ditampilkan terbuka; tidak ada pembayaran nyata.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" id="pesan" data-section="pesan" hidden>
+      <div class="page-hero">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#/beranda">Beranda</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Pesan Tiket</span>
+          </nav>
+          <span class="eyebrow eyebrow--plain">Pemesanan demo</span>
+          <h1>Atur perjalanan antarkota Anda</h1>
+          <p class="page-description">Pilih rute, jadwal, dan kursi, lalu isi data penumpang serta simulasi pembayaran. Tidak ada transaksi nyata; tiket dan data demo hanya disimpan di LocalStorage browser ini.</p>
+        </div>
+      </div>
+
+      <div class="container page-content">
+        <ol class="booking-steps" aria-label="Alur pemesanan">
+          <li class="booking-step is-active">
+            <span class="booking-step__number">1</span>
+            <div><strong>Detail perjalanan</strong><span>Rute, tanggal, jadwal</span></div>
+          </li>
+          <li class="booking-step">
+            <span class="booking-step__number">2</span>
+            <div><strong>Pilih kursi</strong><span>Kursi sesuai penumpang</span></div>
+          </li>
+          <li class="booking-step">
+            <span class="booking-step__number">3</span>
+            <div><strong>Data penumpang</strong><span>Nama dan kontak</span></div>
+          </li>
+          <li class="booking-step">
+            <span class="booking-step__number">4</span>
+            <div><strong>Pembayaran</strong><span>Simulasi dan review</span></div>
+          </li>
+          <li class="booking-step">
+            <span class="booking-step__number">5</span>
+            <div><strong>E-tiket</strong><span>Tiket demo tersimpan</span></div>
+          </li>
+        </ol>
+
+        <form class="booking-form" id="booking-form" novalidate>
+          <div class="booking-layout" id="booking-flow">
+            <div class="booking-main">
+              <section class="panel form-panel" aria-labelledby="booking-details-title">
+                <div class="panel-header">
+                  <div>
+                    <span class="panel-kicker">Langkah 1</span>
+                    <h2 id="booking-details-title">Detail perjalanan</h2>
+                  </div>
+                  <span class="badge badge--soft">Data demo</span>
+                </div>
+
+                <div class="booking-route-grid">
+                  <div class="field">
+                    <label class="form-label" for="booking-origin">Kota asal</label>
+                    <div class="input-with-icon">
+                      <svg class="icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+                      <select class="form-control" id="booking-origin" name="booking-origin" aria-describedby="booking-origin-error" required></select>
+                    </div>
+                    <p class="field-error" id="booking-origin-error" role="alert" hidden></p>
+                  </div>
+
+                  <button class="swap-button" id="booking-swap" type="button" aria-label="Tukar kota asal dan tujuan">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-swap"></use></svg>
+                  </button>
+
+                  <div class="field">
+                    <label class="form-label" for="booking-destination">Kota tujuan</label>
+                    <div class="input-with-icon">
+                      <svg class="icon" aria-hidden="true"><use href="#icon-map-pin"></use></svg>
+                      <select class="form-control" id="booking-destination" name="booking-destination" aria-describedby="booking-destination-error" required></select>
+                    </div>
+                    <p class="field-error" id="booking-destination-error" role="alert" hidden></p>
+                  </div>
+                </div>
+
+                <div class="form-grid form-grid--two">
+                  <div class="field">
+                    <label class="form-label" for="booking-date">Tanggal keberangkatan</label>
+                    <div class="input-with-icon">
+                      <svg class="icon" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+                      <input class="form-control" type="date" id="booking-date" name="booking-date" aria-describedby="booking-date-error" required>
+                    </div>
+                    <p class="field-error" id="booking-date-error" role="alert" hidden></p>
+                  </div>
+
+                  <div class="field">
+                    <label class="form-label" for="booking-passengers">Jumlah penumpang</label>
+                    <div class="input-with-icon">
+                      <svg class="icon" aria-hidden="true"><use href="#icon-users"></use></svg>
+                      <select class="form-control" id="booking-passengers" name="booking-passengers" aria-describedby="booking-passengers-error" required>
+                        <option value="1">1 orang</option>
+                        <option value="2">2 orang</option>
+                        <option value="3">3 orang</option>
+                        <option value="4">4 orang</option>
+                        <option value="5">5 orang</option>
+                        <option value="6">6 orang</option>
+                      </select>
+                    </div>
+                    <p class="field-error" id="booking-passengers-error" role="alert" hidden></p>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="form-label" for="booking-schedule">Jadwal keberangkatan</label>
+                  <div class="select-wrap">
+                    <select class="form-control" id="booking-schedule" name="booking-schedule" aria-describedby="booking-schedule-meta booking-schedule-error" required></select>
+                  </div>
+                  <p class="form-hint" id="booking-schedule-meta" aria-live="polite">Pilih rute untuk melihat detail perjalanan.</p>
+                  <p class="field-error" id="booking-schedule-error" role="alert" hidden></p>
+                </div>
+              </section>
+
+              <section class="panel form-panel" aria-labelledby="booking-seat-title">
+                <div class="panel-header">
+                  <div>
+                    <span class="panel-kicker">Langkah 2</span>
+                    <h2 id="booking-seat-title">Pilih kursi</h2>
+                  </div>
+                  <span class="badge badge--soft" id="booking-seat-capacity">— kursi demo</span>
+                </div>
+
+                <ul class="seat-legend seat-legend--detailed" aria-label="Keterangan status kursi">
+                  <li>
+                    <span class="legend-seat legend-seat--available" aria-hidden="true">○</span>
+                    <span><strong>Tersedia</strong><small>Bisa dipilih</small></span>
+                  </li>
+                  <li>
+                    <span class="legend-seat legend-seat--selected" aria-hidden="true">✓</span>
+                    <span><strong>Dipilih</strong><small>Klik untuk batal</small></span>
+                  </li>
+                  <li>
+                    <span class="legend-seat legend-seat--occupied" aria-hidden="true">×</span>
+                    <span><strong>Terisi</strong><small>Tidak bisa dipilih</small></span>
+                  </li>
+                </ul>
+
+                <div class="seat-map-wrap seat-map-wrap--booking">
+                  <div class="seat-map-host" id="seat-map" role="group" aria-label="Peta kursi bus" aria-describedby="seat-selection-note booking-seats-error"></div>
+                </div>
+
+                <p class="seat-hint" id="seat-selection-note" aria-live="polite">0 dari 1 kursi dipilih. Pilih 1 kursi lagi.</p>
+                <p class="field-error" id="booking-seats-error" role="alert" hidden></p>
+              </section>
+
+              <section class="panel form-panel" aria-labelledby="booking-contact-title">
+                <div class="panel-header">
+                  <div>
+                    <span class="panel-kicker">Langkah 3</span>
+                    <h2 id="booking-contact-title">Data penumpang</h2>
+                  </div>
+                  <span class="badge badge--soft">Sesuai kursi</span>
+                </div>
+
+                <div class="passenger-intro">
+                  <p>Isi nama lengkap untuk setiap kursi yang dipilih. Jumlah form mengikuti kursi pada langkah sebelumnya.</p>
+                </div>
+
+                <div class="passenger-fields" id="passenger-fields"></div>
+                <p class="field-error" id="booking-passengers-fields-error" role="alert" hidden></p>
+
+                <div class="passenger-contact">
+                  <div class="passenger-contact__header">
+                    <h3>Kontak pemesan</h3>
+                    <p>Telepon dan email cukup diisi sekali untuk seluruh pesanan demo.</p>
+                  </div>
+
+                  <div class="form-grid form-grid--two">
+                    <div class="field">
+                      <label class="form-label" for="booking-phone">Nomor telepon</label>
+                      <input class="form-control" type="tel" id="booking-phone" name="booking-phone" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx" aria-describedby="booking-phone-error" required>
+                      <p class="field-error" id="booking-phone-error" role="alert" hidden></p>
+                    </div>
+
+                    <div class="field">
+                      <label class="form-label" for="booking-email">Alamat email</label>
+                      <input class="form-control" type="email" id="booking-email" name="booking-email" autocomplete="email" placeholder="nama@contoh.com" aria-describedby="booking-email-error" required>
+                      <p class="field-error" id="booking-email-error" role="alert" hidden></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label class="form-label" for="booking-notes">Catatan perjalanan <span class="label-optional">(opsional)</span></label>
+                  <textarea class="form-control" id="booking-notes" name="booking-notes" rows="3" placeholder="Contoh: membawa satu koper besar"></textarea>
+                </div>
+              </section>
+
+              <section class="panel form-panel" aria-labelledby="booking-payment-title">
+                <div class="panel-header">
+                  <div>
+                    <span class="panel-kicker">Langkah 4</span>
+                    <h2 id="booking-payment-title">Review &amp; pembayaran</h2>
+                  </div>
+                  <span class="badge badge--soft">100% simulasi</span>
+                </div>
+
+                <div class="booking-review">
+                  <div class="booking-review__header">
+                    <strong>Ringkasan sebelum dibayar</strong>
+                    <span class="badge badge--soft">Demo</span>
+                  </div>
+                  <dl class="booking-review__grid">
+                    <div><dt>Rute</dt><dd id="review-route">—</dd></div>
+                    <div><dt>Jadwal</dt><dd id="review-schedule">—</dd></div>
+                    <div><dt>Penumpang</dt><dd id="review-passengers">—</dd></div>
+                    <div><dt>Total demo</dt><dd id="review-total">—</dd></div>
+                  </dl>
+                </div>
+
+                <fieldset class="payment-methods" id="booking-payment-methods" aria-describedby="booking-payment-error booking-payment-note">
+                  <legend class="form-label">Metode pembayaran simulasi</legend>
+                  <p class="form-hint" id="booking-payment-note">Pilih satu metode. Tidak ada nomor rekening, kartu, PIN, atau OTP yang diminta.</p>
+
+                  <div class="payment-options">
+                    <label class="payment-option" for="booking-payment-transfer">
+                      <input type="radio" id="booking-payment-transfer" name="booking-payment-method" value="transfer">
+                      <span class="payment-option__icon" aria-hidden="true">
+                        <svg class="icon"><use href="#icon-ticket"></use></svg>
+                      </span>
+                      <span class="payment-option__copy">
+                        <strong>Transfer bank demo</strong>
+                        <small>Instruksi fiktif, tanpa transfer nyata</small>
+                      </span>
+                      <span class="payment-option__check" aria-hidden="true">
+                        <svg class="icon"><use href="#icon-check"></use></svg>
+                      </span>
+                    </label>
+
+                    <label class="payment-option" for="booking-payment-ewallet">
+                      <input type="radio" id="booking-payment-ewallet" name="booking-payment-method" value="ewallet">
+                      <span class="payment-option__icon" aria-hidden="true">
+                        <svg class="icon"><use href="#icon-shield-check"></use></svg>
+                      </span>
+                      <span class="payment-option__copy">
+                        <strong>E-wallet demo</strong>
+                        <small>Konfirmasi tanpa saldo atau akun asli</small>
+                      </span>
+                      <span class="payment-option__check" aria-hidden="true">
+                        <svg class="icon"><use href="#icon-check"></use></svg>
+                      </span>
+                    </label>
+
+                    <label class="payment-option" for="booking-payment-counter">
+                      <input type="radio" id="booking-payment-counter" name="booking-payment-method" value="counter">
+                      <span class="payment-option__icon" aria-hidden="true">
+                        <svg class="icon"><use href="#icon-map-pin"></use></svg>
+                      </span>
+                      <span class="payment-option__copy">
+                        <strong>Bayar di loket demo</strong>
+                        <small>Bayar fiktif saat simulasi di terminal</small>
+                      </span>
+                      <span class="payment-option__check" aria-hidden="true">
+                        <svg class="icon"><use href="#icon-check"></use></svg>
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <p class="field-error" id="booking-payment-error" role="alert" hidden></p>
+
+                <div class="notice-box notice-box--compact booking-payment-notice">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-info"></use></svg>
+                  <p>Pembayaran ini hanya simulasi. Jangan masukkan data kartu, PIN, OTP, atau kredensial perbankan apa pun.</p>
+                </div>
+
+                <div class="form-check">
+                  <input type="checkbox" id="booking-terms" name="booking-terms" aria-describedby="booking-terms-error">
+                  <label for="booking-terms">Saya memahami bahwa ini adalah pemesanan dan pembayaran simulasi, bukan reservasi atau transaksi nyata.</label>
+                </div>
+                <p class="field-error" id="booking-terms-error" role="alert" hidden></p>
+              </section>
+            </div>
+
+            <aside class="booking-aside" aria-label="Ringkasan pemesanan">
+              <div class="panel booking-summary">
+                <div class="panel-header">
+                  <div>
+                    <span class="panel-kicker">Ringkasan</span>
+                    <h2>Perjalanan Anda</h2>
+                  </div>
+                  <svg class="icon summary-heading-icon" aria-hidden="true"><use href="#icon-ticket"></use></svg>
+                </div>
+
+                <div class="summary-route-block">
+                  <span class="summary-label">Rute</span>
+                  <strong id="summary-route">Jakarta → Bandung</strong>
+                  <span class="summary-date" id="summary-date">Tanggal belum dipilih</span>
+                </div>
+
+                <dl class="summary-list">
+                  <div><dt>Jadwal</dt><dd id="summary-schedule">—</dd></div>
+                  <div><dt>Bus</dt><dd id="summary-bus">—</dd></div>
+                  <div>
+                    <dt>Kursi</dt>
+                    <dd><div class="selected-seat-list" id="summary-seat-list"><span class="summary-empty">Belum ada kursi dipilih</span></div></dd>
+                  </div>
+                </dl>
+
+                <div class="summary-price">
+                  <div><span id="summary-fare-label">Tiket × 1</span><span id="summary-fare">—</span></div>
+                  <div><span>Biaya layanan</span><span id="summary-service">—</span></div>
+                  <div class="summary-total"><span>Total demo</span><strong id="summary-total">—</strong></div>
+                </div>
+
+                <button class="btn btn--primary btn--block" id="booking-submit" type="submit" disabled>
+                  <span class="spinner" aria-hidden="true"></span>
+                  <span class="btn__label">Konfirmasi Pembayaran Demo</span>
+                </button>
+
+                <div class="notice-box notice-box--compact">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-info"></use></svg>
+                  <p>Tidak ada pembayaran atau pengiriman tiket nyata. Data demo disimpan di LocalStorage perangkat ini.</p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </form>
+
+        <section class="booking-success" id="booking-success" aria-labelledby="success-heading" hidden>
+          <div class="success-card">
+            <div class="ticket-brand">
+              <span class="brand brand--ticket">
+                <span class="brand__mark">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-bus"></use></svg>
+                </span>
+                <span class="brand__text">Smart<span>Shuttle</span></span>
+              </span>
+              <span class="ticket-brand__label">E-tiket demo</span>
+            </div>
+
+            <span class="success-card__icon">
+              <svg class="icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+            </span>
+            <span class="badge badge--success">Pesanan demo berhasil</span>
+            <h2 id="success-heading">E-tiket demo berhasil dibuat</h2>
+            <p class="success-lead">Simpan kode berikut untuk mencoba simulasi pelacakan bus. Tiket ini tidak berlaku untuk perjalanan nyata.</p>
+
+            <div class="booking-code-box">
+              <span>Kode pemesanan</span>
+              <strong id="success-code">SS-2026-XXXXX</strong>
+            </div>
+
+            <dl class="success-details">
+              <div><dt>Rute</dt><dd id="success-route">—</dd></div>
+              <div><dt>Tanggal</dt><dd id="success-date">—</dd></div>
+              <div><dt>Jadwal</dt><dd id="success-time">—</dd></div>
+              <div><dt>Kursi</dt><dd id="success-seats">—</dd></div>
+              <div><dt>Pemesan</dt><dd id="success-name">—</dd></div>
+              <div><dt>Terminal asal</dt><dd id="success-terminal">—</dd></div>
+              <div><dt>Pembayaran</dt><dd id="success-payment">—</dd></div>
+              <div><dt>Total demo</dt><dd id="success-total">—</dd></div>
+            </dl>
+
+            <div class="ticket-passengers">
+              <div class="ticket-passengers__header">
+                <h3>Daftar penumpang</h3>
+                <span class="ticket-passengers__note">Nama sesuai isian demo</span>
+              </div>
+              <ul class="ticket-passenger-list" id="success-passengers-list"></ul>
+            </div>
+
+            <div class="success-actions">
+              <button class="btn btn--primary" id="success-track" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#icon-navigation"></use></svg>
+                <span>Lacak Bus</span>
+              </button>
+              <button class="btn btn--secondary" id="success-new" type="button">
+                <svg class="icon" aria-hidden="true"><use href="#icon-ticket"></use></svg>
+                <span>Buat Tiket Lagi</span>
+              </button>
+            </div>
+            <p class="form-hint">Tiket ini hanya tersimpan di LocalStorage browser ini. Menghapus data situs akan menghapus riwayat demo.</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="page-section" id="lacak" data-section="lacak" hidden>
+      <div class="page-hero">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#/beranda">Beranda</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Lacak Bus</span>
+          </nav>
+          <span class="eyebrow eyebrow--plain">Pelacakan simulasi</span>
+          <h1>Lacak Perjalanan Bus</h1>
+          <p class="page-description">Pantau simulasi perjalanan bus dan lihat perkiraan waktu kedatangan melalui SmartShuttle. Posisi pada peta adalah animasi demo, bukan GPS atau data operator sungguhan.</p>
+        </div>
+      </div>
+
+      <div class="container page-content">
+        <section class="panel tracking-lookup" aria-labelledby="tracking-lookup-title">
+          <div>
+            <span class="panel-kicker">Mulai pelacakan</span>
+            <h2 id="tracking-lookup-title">Masukkan kode pemesanan</h2>
+            <p>Gunakan kode dari tiket demo yang baru saja dibuat, atau pilih salah satu kode contoh di bawah.</p>
+
+            <form class="tracking-form" id="tracking-form" novalidate>
+              <div class="field">
+                <label class="form-label" for="tracking-code">Kode pemesanan</label>
+                <div class="tracking-controls">
+                  <input class="form-control code-input" type="text" id="tracking-code" name="tracking-code" placeholder="SS-2026-XXXXX" autocomplete="off" spellcheck="false" maxlength="13" aria-describedby="tracking-error">
+                  <button class="btn btn--primary" id="tracking-submit" type="submit">
+                    <span class="spinner" aria-hidden="true"></span>
+                    <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+                    <span class="btn__label">Lacak Bus</span>
+                  </button>
+                </div>
+                <p class="field-error" id="tracking-error" role="alert" hidden></p>
+              </div>
+            </form>
+
+            <div class="demo-codes">
+              <span class="demo-codes__label">Coba kode demo:</span>
+              <div class="demo-code-list" id="demo-code-list"></div>
+            </div>
+          </div>
+          <div class="tracking-lookup__badge" aria-hidden="true">
+            <svg class="icon" aria-hidden="true"><use href="#icon-radio"></use></svg>
+            <span>Simulasi</span>
+          </div>
+        </section>
+
+        <div class="panel empty-state tracking-empty" id="tracking-empty">
+          <span class="empty-state__icon">
+            <svg class="icon" aria-hidden="true"><use href="#icon-navigation"></use></svg>
+          </span>
+          <h2>Belum ada perjalanan yang dilacak</h2>
+          <p>Pilih kode demo di atas atau masukkan kode tiket demo yang tersimpan di browser ini. Panel perjalanan akan muncul setelah kode ditemukan.</p>
+          <button class="btn btn--primary" id="tracking-demo-cta" type="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-play"></use></svg>
+            <span>Coba Perjalanan Demo</span>
+          </button>
+        </div>
+
+        <div class="tracking-dashboard" id="tracking-dashboard" hidden>
+          <div class="tracking-main">
+            <section class="panel tracking-card" aria-labelledby="track-route-title">
+              <div class="tracking-top">
+                <div>
+                  <span class="status-badge status-badge--transit" id="track-status-badge"><span class="status-dot" aria-hidden="true"></span>Dalam perjalanan</span>
+                  <h2 id="track-route-title">Rute perjalanan</h2>
+                  <p id="track-route-subtitle">Terminal asal menuju terminal tujuan</p>
+                </div>
+                <div class="tracking-bus-tag">
+                  <span class="tracking-bus-tag__icon"><svg class="icon" aria-hidden="true"><use href="#icon-bus"></use></svg></span>
+                  <div><span>Bus aktif</span><strong id="track-bus-name">—</strong></div>
+                </div>
+              </div>
+
+              <div class="tracking-trip-meta" aria-label="Informasi utama perjalanan">
+                <div><span>Operator</span><strong id="track-operator">—</strong></div>
+                <div><span>Kode</span><strong class="code-value" id="track-code-header">—</strong></div>
+                <div><span>Keberangkatan</span><strong id="track-departure">—</strong></div>
+                <div><span>Estimasi tiba</span><strong id="track-eta-header">—</strong></div>
+                <div><span>Sisa waktu</span><strong id="track-remaining-header">—</strong></div>
+                <div><span>Pembaruan</span><strong id="track-update-header">—</strong></div>
+              </div>
+
+              <div class="tracking-map-shell">
+                <div class="tracking-map-head">
+                  <div>
+                    <span class="mode-chip">MODE SIMULASI</span>
+                    <strong>Peta perjalanan ilustratif</strong>
+                  </div>
+                  <span class="tracking-map-status" id="tracking-map-status">Menyiapkan peta...</span>
+                </div>
+                <div class="tracking-map" id="tracking-map" role="region" aria-label="Peta simulasi perjalanan bus"></div>
+                <div class="tracking-map-fallback" id="tracking-map-fallback" hidden></div>
+                <p class="tracking-map-note">Jalur pada peta adalah ilustrasi untuk simulasi, bukan navigasi jalan resmi. Posisi bus tidak berasal dari GPS.</p>
+              </div>
+
+              <div class="route-progress">
+                <div class="route-endpoints">
+                  <div><span>Asal</span><strong id="track-start-terminal">—</strong></div>
+                  <div class="route-endpoints__end"><span>Tujuan</span><strong id="track-end-terminal">—</strong></div>
+                </div>
+
+                <div class="route-track" id="track-progress" role="progressbar" aria-label="Progres perjalanan simulasi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span class="route-track__fill" id="track-progress-fill"></span>
+                  <span class="route-track__bus" id="track-bus-marker" aria-hidden="true">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-bus"></use></svg>
+                  </span>
+                </div>
+
+                <div class="progress-meta">
+                  <span class="progress-value" id="track-progress-value">0% perjalanan</span>
+                  <span id="track-progress-context">Simulasi belum dimulai.</span>
+                </div>
+              </div>
+
+              <div class="tracking-stops-wrap">
+                <h3>Urutan perjalanan</h3>
+                <ol class="stop-list" id="track-stops"></ol>
+              </div>
+
+              <div class="simulation-controls">
+                <div class="simulation-controls__actions">
+                  <button class="btn btn--secondary btn--small" id="tracking-toggle" type="button" aria-pressed="false">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-play"></use></svg>
+                    <span class="btn__label">Mulai simulasi</span>
+                  </button>
+                  <button class="btn btn--ghost btn--small" id="tracking-reset" type="button">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-rotate"></use></svg>
+                    <span>Reset</span>
+                  </button>
+                </div>
+                <div class="simulation-options">
+                  <div class="simulation-speed" id="simulation-speed" role="group" aria-label="Kecepatan simulasi">
+                    <span>Kecepatan simulasi</span>
+                    <div class="simulation-speed__buttons">
+                      <button class="speed-chip is-active" type="button" data-speed="1" aria-pressed="true">1×</button>
+                      <button class="speed-chip" type="button" data-speed="2" aria-pressed="false">2×</button>
+                      <button class="speed-chip" type="button" data-speed="4" aria-pressed="false">4×</button>
+                    </div>
+                  </div>
+                  <p class="simulation-note">Posisi diperbarui berkala dari skenario simulasi. Waktu perjalanan dipercepat agar mudah diamati.</p>
+                  <p class="simulation-mode-note" id="tracking-time-mode">Mode simulasi dipercepat 1×. ETA mengikuti jam perangkat Anda.</p>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="tracking-side" aria-label="Detail pelacakan">
+            <div class="panel eta-card">
+              <span class="eyebrow eyebrow--plain">Perkiraan tiba</span>
+              <strong class="eta-value" id="track-eta">—</strong>
+              <p id="track-eta-caption">Perkiraan sisa perjalanan akan muncul di sini.</p>
+              <span class="live-label"><span class="live-dot" aria-hidden="true"></span>Pembaruan simulasi otomatis</span>
+            </div>
+
+            <div class="panel tracking-details">
+              <h3>Detail perjalanan</h3>
+              <dl class="detail-list">
+                <div><dt>Kode tiket</dt><dd class="code-value" id="track-code">—</dd></div>
+                <div><dt>Tanggal</dt><dd id="track-date">—</dd></div>
+                <div><dt>Pembaruan terakhir</dt><dd id="track-last-update">—</dd></div>
+                <div><dt>Kecepatan</dt><dd id="track-speed">—</dd></div>
+                <div><dt>Pengemudi</dt><dd id="track-driver">—</dd></div>
+                <div><dt>Plat bus</dt><dd id="track-plate">—</dd></div>
+                <div><dt>Sumber data</dt><dd id="track-source">—</dd></div>
+              </dl>
+            </div>
+
+            <div class="notice-box">
+              <svg class="icon" aria-hidden="true"><use href="#icon-alert-triangle"></use></svg>
+              <p>Simulasi ini tidak terhubung ke GPS, operator bus, atau layanan peta. Gunakan kode demo untuk mencoba tanpa membuat tiket.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section dashboard-section" id="dashboard" data-section="dashboard" hidden>
+      <div class="container dashboard-layout">
+        <aside class="dashboard-sidebar">
+          <div class="dashboard-profile-card">
+            <span class="dashboard-avatar" id="dashboard-avatar" aria-hidden="true">RP</span>
+            <div>
+              <strong id="dashboard-profile-name">Rani Prameswari</strong>
+              <span id="dashboard-profile-email">rani.demo@smartshuttle.local</span>
+              <span class="badge badge--soft">Akun demo</span>
+            </div>
+          </div>
+
+          <nav class="dashboard-nav" aria-label="Navigasi dashboard demo">
+            <p class="dashboard-nav__label">Menu akun</p>
+            <button class="dashboard-nav__item is-active" type="button" data-dashboard-view="ringkasan">
+              <svg class="icon" aria-hidden="true"><use href="#icon-grid"></use></svg>
+              <span>Ringkasan</span>
+            </button>
+            <button class="dashboard-nav__item" type="button" data-dashboard-view="pesanan">
+              <svg class="icon" aria-hidden="true"><use href="#icon-ticket"></use></svg>
+              <span>Pesanan Saya</span>
+            </button>
+            <button class="dashboard-nav__item" type="button" data-dashboard-view="lacak">
+              <svg class="icon" aria-hidden="true"><use href="#icon-navigation"></use></svg>
+              <span>Lacak Bus</span>
+            </button>
+            <button class="dashboard-nav__item" type="button" data-dashboard-view="notifikasi">
+              <svg class="icon" aria-hidden="true"><use href="#icon-bell"></use></svg>
+              <span>Notifikasi</span>
+              <span class="dashboard-menu-badge" id="dashboard-menu-notif-badge" hidden>0</span>
+            </button>
+            <button class="dashboard-nav__item" type="button" data-dashboard-view="profil">
+              <svg class="icon" aria-hidden="true"><use href="#icon-user"></use></svg>
+              <span>Profil</span>
+            </button>
+            <button class="dashboard-nav__item" type="button" data-dashboard-view="pengaturan">
+              <svg class="icon" aria-hidden="true"><use href="#icon-settings"></use></svg>
+              <span>Pengaturan</span>
+            </button>
+          </nav>
+
+          <div class="dashboard-sidebar__note">
+            <svg class="icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
+            <p>Semua data di dashboard ini adalah demo dan tersimpan di LocalStorage browser Anda.</p>
+          </div>
+        </aside>
+
+        <div class="dashboard-main">
+          <header class="dashboard-topbar">
+            <div>
+              <span class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#icon-grid"></use></svg>Dashboard demo</span>
+              <h1>Dashboard Demo</h1>
+              <p>Kelola pesanan, tiket, notifikasi, dan preferensi demo Anda dalam satu tempat.</p>
+            </div>
+            <a class="btn btn--primary" href="#/pesan">
+              <svg class="icon" aria-hidden="true"><use href="#icon-ticket"></use></svg>
+              <span>Pesan Tiket</span>
+            </a>
+          </header>
+
+          <div class="dashboard-view" data-dashboard-view-panel="ringkasan">
+            <div class="dashboard-stats">
+              <article class="dashboard-stat-card">
+                <span class="dashboard-stat-card__icon"><svg class="icon" aria-hidden="true"><use href="#icon-ticket"></use></svg></span>
+                <strong id="dashboard-stat-orders">0</strong>
+                <span>Total pesanan</span>
+                <small>Seluruh pesanan demo di browser ini</small>
+              </article>
+              <article class="dashboard-stat-card">
+                <span class="dashboard-stat-card__icon dashboard-stat-card__icon--success"><svg class="icon" aria-hidden="true"><use href="#icon-navigation"></use></svg></span>
+                <strong id="dashboard-stat-upcoming">0</strong>
+                <span>Perjalanan mendatang</span>
+                <small>Tanggal hari ini atau setelahnya</small>
+              </article>
+              <article class="dashboard-stat-card">
+                <span class="dashboard-stat-card__icon dashboard-stat-card__icon--muted"><svg class="icon" aria-hidden="true"><use href="#icon-clock"></use></svg></span>
+                <strong id="dashboard-stat-history">0</strong>
+                <span>Riwayat perjalanan</span>
+                <small>Termasuk pesanan selesai dan dibatalkan</small>
+              </article>
+              <article class="dashboard-stat-card">
+                <span class="dashboard-stat-card__icon dashboard-stat-card__icon--orange"><svg class="icon" aria-hidden="true"><use href="#icon-bell"></use></svg></span>
+                <strong id="dashboard-stat-notifications">0</strong>
+                <span>Notifikasi belum dibaca</span>
+                <small id="dashboard-stat-notifications-caption">Belum ada notifikasi</small>
+              </article>
+            </div>
+
+            <div class="dashboard-overview-grid">
+              <section class="dashboard-panel">
+                <div class="dashboard-panel__head">
+                  <div>
+                    <h2>Pesanan terkini</h2>
+                    <p>Pesanan mendatang dan riwayat terbaru dari perangkat ini.</p>
+                  </div>
+                  <button class="btn btn--ghost btn--small" type="button" data-dashboard-go="pesanan">Lihat semua</button>
+                </div>
+                <div class="dashboard-recent-list" id="dashboard-recent-orders"></div>
+              </section>
+
+              <section class="dashboard-panel">
+                <div class="dashboard-panel__head">
+                  <div>
+                    <h2>Notifikasi terbaru</h2>
+                    <p>Aktivitas pemesanan dan simulasi perjalanan.</p>
+                  </div>
+                  <button class="btn btn--ghost btn--small" type="button" data-dashboard-go="notifikasi">Lihat semua</button>
+                </div>
+                <div class="dashboard-recent-list" id="dashboard-recent-notifications"></div>
+              </section>
+            </div>
+          </div>
+
+          <div class="dashboard-view" data-dashboard-view-panel="pesanan" hidden>
+            <section class="dashboard-panel">
+              <div class="dashboard-panel__head">
+                <div>
+                  <h2>Pesanan Saya</h2>
+                  <p>Riwayat pesanan lokal beserta status demo dan akses ke detail tiket.</p>
+                </div>
+                <span class="dashboard-count" id="dashboard-order-count">0 pesanan ditampilkan</span>
+              </div>
+
+              <div class="dashboard-toolbar">
+                <label class="dashboard-search" for="dashboard-order-search">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+                  <span class="sr-only">Cari kode pesanan</span>
+                  <input type="search" id="dashboard-order-search" placeholder="Cari kode pesanan..." autocomplete="off">
+                </label>
+                <label class="dashboard-select" for="dashboard-order-status">
+                  <span>Status</span>
+                  <select id="dashboard-order-status">
+                    <option value="Semua">Semua status</option>
+                    <option value="Terjadwal">Terjadwal</option>
+                    <option value="Berlangsung">Berlangsung</option>
+                    <option value="Selesai">Selesai</option>
+                    <option value="Dibatalkan">Dibatalkan</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="dashboard-order-list" id="dashboard-orders-list"></div>
+            </section>
+          </div>
+
+          <div class="dashboard-view" data-dashboard-view-panel="lacak" hidden>
+            <section class="dashboard-panel">
+              <div class="dashboard-panel__head">
+                <div>
+                  <h2>Lacak Perjalanan Demo</h2>
+                  <p>Buka simulasi posisi bus untuk pesanan mendatang yang memiliki rute simulasi.</p>
+                </div>
+                <a class="btn btn--secondary btn--small" href="#/lacak">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-navigation"></use></svg>
+                  <span>Halaman Lacak</span>
+                </a>
+              </div>
+              <div class="notice-box notice-box--soft">
+                <svg class="icon" aria-hidden="true"><use href="#icon-info"></use></svg>
+                <p>Pelacakan di SmartShuttle adalah simulasi. Posisi bus bukan berasal dari GPS kendaraan nyata.</p>
+              </div>
+              <div class="dashboard-track-list" id="dashboard-track-list"></div>
+            </section>
+          </div>
+
+          <div class="dashboard-view" data-dashboard-view-panel="notifikasi" hidden>
+            <section class="dashboard-panel">
+              <div class="dashboard-panel__head">
+                <div>
+                  <h2>Notifikasi Demo</h2>
+                  <p id="dashboard-notification-count">0 belum dibaca</p>
+                </div>
+                <button class="btn btn--secondary btn--small" type="button" id="dashboard-mark-all">Tandai semua dibaca</button>
+              </div>
+              <div class="dashboard-notification-list" id="dashboard-notification-list"></div>
+              <p class="dashboard-note">Notifikasi disimpan di browser ini dan hanya dibuat saat Anda memakai fitur demo. SmartShuttle tidak mengirim push notification.</p>
+            </section>
+          </div>
+
+          <div class="dashboard-view" data-dashboard-view-panel="profil" hidden>
+            <section class="dashboard-panel dashboard-panel--narrow">
+              <div class="dashboard-panel__head">
+                <div>
+                  <h2>Profil Demo</h2>
+                  <p>Atur nama tampilan dan kontak demo untuk label pesanan.</p>
+                </div>
+              </div>
+              <form class="dashboard-form" id="dashboard-profile-form" novalidate>
+                <div class="field">
+                  <label for="dashboard-profile-name-input">Nama tampilan</label>
+                  <input type="text" id="dashboard-profile-name-input" name="name" maxlength="60" autocomplete="name" aria-describedby="dashboard-profile-name-input-error" required>
+                  <p class="field-error" id="dashboard-profile-name-input-error" role="alert" hidden></p>
+                </div>
+                <div class="field">
+                  <label for="dashboard-profile-email-input">Email demo</label>
+                  <input type="email" id="dashboard-profile-email-input" name="email" autocomplete="email" aria-describedby="dashboard-profile-email-input-hint dashboard-profile-email-input-error" required>
+                  <p class="field-hint" id="dashboard-profile-email-input-hint">Gunakan alamat email contoh. Tidak ada verifikasi email.</p>
+                  <p class="field-error" id="dashboard-profile-email-input-error" role="alert" hidden></p>
+                </div>
+                <div class="field">
+                  <label for="dashboard-profile-phone-input">Telepon demo</label>
+                  <input type="tel" id="dashboard-profile-phone-input" name="phone" autocomplete="tel" aria-describedby="dashboard-profile-phone-input-hint dashboard-profile-phone-input-error" required>
+                  <p class="field-hint" id="dashboard-profile-phone-input-hint">Nomor ini hanya disimpan di browser dan tidak digunakan untuk mengirim pesan.</p>
+                  <p class="field-error" id="dashboard-profile-phone-input-error" role="alert" hidden></p>
+                </div>
+                <div class="notice-box notice-box--soft">
+                  <svg class="icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
+                  <p>SmartShuttle tidak meminta kata sandi, PIN, atau OTP. Jangan masukkan data pribadi yang sensitif.</p>
+                </div>
+                <button class="btn btn--primary" type="submit">Simpan Profil Demo</button>
+              </form>
+            </section>
+          </div>
+
+          <div class="dashboard-view" data-dashboard-view-panel="pengaturan" hidden>
+            <section class="dashboard-panel dashboard-panel--narrow">
+              <div class="dashboard-panel__head">
+                <div>
+                  <h2>Pengaturan</h2>
+                  <p>Preferensi tampilan dan data demo pada browser ini.</p>
+                </div>
+              </div>
+              <form class="dashboard-form" id="dashboard-settings-form">
+                <label class="dashboard-toggle">
+                  <span>
+                    <strong>Notifikasi dalam aplikasi</strong>
+                    <small>Simpan notifikasi demo saat pesanan atau simulasi berjalan.</small>
+                  </span>
+                  <input type="checkbox" id="dashboard-settings-notifications">
+                  <span class="dashboard-toggle__track" aria-hidden="true"></span>
+                </label>
+                <label class="dashboard-toggle">
+                  <span>
+                    <strong>Tampilan ringkas</strong>
+                    <small>Kurangi jarak kartu dashboard agar lebih padat.</small>
+                  </span>
+                  <input type="checkbox" id="dashboard-settings-compact">
+                  <span class="dashboard-toggle__track" aria-hidden="true"></span>
+                </label>
+                <button class="btn btn--primary" type="submit">Simpan Pengaturan</button>
+              </form>
+
+              <div class="dashboard-danger">
+                <div>
+                  <h3>Hapus data demo</h3>
+                  <p>Menghapus pesanan, notifikasi, profil, dan pengaturan SmartShuttle di browser ini. Data situs lain tidak dihapus.</p>
+                </div>
+                <button class="btn btn--danger" type="button" id="dashboard-reset-data">Hapus Data Demo</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="dashboard-view" data-dashboard-view-panel="tiket" hidden>
+            <div class="dashboard-ticket-actions">
+              <button class="btn btn--secondary btn--small" type="button" id="dashboard-ticket-back">
+                <svg class="icon" aria-hidden="true"><use href="#icon-arrow-left"></use></svg>
+                <span>Kembali ke Pesanan</span>
+              </button>
+              <button class="btn btn--primary btn--small" type="button" id="dashboard-ticket-print">
+                <svg class="icon" aria-hidden="true"><use href="#icon-printer"></use></svg>
+                <span>Cetak Tiket</span>
+              </button>
+            </div>
+            <div id="dashboard-ticket-detail"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" id="tentang" data-section="tentang" hidden>
+      <div class="page-hero">
+        <div class="container">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#/beranda">Beranda</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Tentang</span>
+          </nav>
+          <span class="eyebrow eyebrow--plain">Tentang SmartShuttle</span>
+          <h1>Perjalanan antarkota yang lebih terarah</h1>
+          <p class="page-description">SmartShuttle adalah proyek demo antarmuka untuk membantu penumpang memahami alur pemesanan tiket dan pelacakan bus dalam satu pengalaman yang konsisten.</p>
+        </div>
+      </div>
+
+      <div class="container page-content">
+        <div class="about-grid">
+          <section class="about-story" aria-labelledby="about-story-title">
+            <span class="eyebrow eyebrow--plain">Tujuan proyek</span>
+            <h2 id="about-story-title">Menjembatani informasi perjalanan yang sering terpisah</h2>
+            <p>Penumpang biasanya harus berpindah antara halaman jadwal, formulir pemesanan, dan informasi keberangkatan. SmartShuttle menyatukan alur tersebut menjadi satu aplikasi sederhana yang dapat dibuka langsung dari browser.</p>
+            <p>Versi ini menyatukan pencarian bus, daftar hasil yang dapat diurutkan dan difilter, pemesanan kursi demo, penyimpanan lokal, serta animasi pelacakan dalam satu pengalaman.</p>
+            <div class="notice-box">
+              <svg class="icon" aria-hidden="true"><use href="#icon-info"></use></svg>
+              <p>SmartShuttle bukan layanan pemesanan resmi. Seluruh rute, harga, jadwal, nama pengemudi, dan posisi bus adalah data contoh untuk pembelajaran.</p>
+            </div>
+          </section>
+
+          <aside class="about-stats" aria-label="Statistik data demo">
+            <div class="stat-card"><strong>6</strong><span>Kota dalam jaringan demo</span></div>
+            <div class="stat-card"><strong>15</strong><span>Koridor dua arah</span></div>
+            <div class="stat-card"><strong>3</strong><span>Kelas bus contoh</span></div>
+            <div class="stat-card"><strong>0</strong><span>Koneksi backend</span></div>
+          </aside>
+        </div>
+
+        <section class="section section--flush" aria-labelledby="values-title">
+          <div class="section-heading section-heading--left">
+            <div>
+              <span class="eyebrow eyebrow--plain">Prinsip desain</span>
+              <h2 class="section-title" id="values-title">Jelas, konsisten, dan tidak berlebihan</h2>
+            </div>
+            <p class="section-description">Setiap komponen memiliki tujuan, status yang terbaca, dan umpan balik yang terlihat.</p>
+          </div>
+
+          <div class="value-grid">
+            <article class="value-card">
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg></span>
+              <h3>Mudah dipahami</h3>
+              <p>Label eksplisit, pesan validasi yang spesifik, dan ringkasan sebelum konfirmasi membantu mengurangi kesalahan input.</p>
+            </article>
+            <article class="value-card">
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg></span>
+              <h3>Transparan</h3>
+              <p>Status demo ditandai di seluruh antarmuka. Tidak ada klaim pembayaran nyata, ketersediaan resmi, atau pelacakan GPS.</p>
+            </article>
+            <article class="value-card">
+              <span class="feature-icon"><svg class="icon" aria-hidden="true"><use href="#icon-armchair"></use></svg></span>
+              <h3>Nyaman di semua layar</h3>
+              <p>Layout responsif, target sentuh yang cukup besar, dan navigasi keyboard diterapkan pada desktop maupun ponsel kecil.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section section--flush" aria-labelledby="data-title">
+          <div class="data-explainer">
+            <div>
+              <span class="eyebrow eyebrow--plain">Cara data bekerja</span>
+              <h2 id="data-title">Demo tanpa instalasi dan tanpa server</h2>
+              <p>SmartShuttle menggunakan HTML, CSS, dan JavaScript murni. Data tiket yang Anda buat disimpan melalui LocalStorage pada browser yang sama.</p>
+            </div>
+            <ol class="data-steps">
+              <li><span>1</span><p>Pilih rute dan jadwal demo.</p></li>
+              <li><span>2</span><p>Pilih kursi serta isi data pemesan.</p></li>
+              <li><span>3</span><p>Simpan tiket demo dan gunakan kodenya untuk pelacakan.</p></li>
+              <li><span>4</span><p>Hapus data situs dari browser jika ingin memulai dari awal.</p></li>
+            </ol>
+          </div>
+        </section>
+
+        <div class="about-cta">
+          <div>
+            <h2>Siap mencoba alurnya?</h2>
+            <p>Mulai dari pemesanan demo atau langsung lihat simulasi perjalanan dengan kode contoh.</p>
+          </div>
+          <div class="about-cta__actions">
+            <a class="btn btn--primary" href="#/pesan">Pesan Tiket</a>
+            <a class="btn btn--secondary" href="#/lacak">Lacak Bus</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand brand--footer" href="#/beranda" aria-label="SmartShuttle, kembali ke beranda">
+          <span class="brand__mark">
+            <svg class="icon" aria-hidden="true"><use href="#icon-bus"></use></svg>
+          </span>
+          <span class="brand__text">Smart<span>Shuttle</span></span>
+        </a>
+        <p>Demo platform pemesanan tiket bus antarkota dan simulasi pelacakan perjalanan. Dibuat dengan HTML, CSS, dan JavaScript murni.</p>
+        <span class="badge badge--footer">Proyek demo akademik</span>
+      </div>
+
+      <nav class="footer-column" aria-label="Navigasi footer">
+        <h2>Navigasi</h2>
+        <ul>
+          <li><a href="#/beranda">Beranda</a></li>
+          <li><a href="#/pesan">Pesan Tiket</a></li>
+          <li><a href="#/lacak">Lacak Bus</a></li>
+          <li><a href="#/tentang">Tentang</a></li>
+          <li><a href="login.html">Masuk</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-column">
+        <h2>Fitur demo</h2>
+        <ul>
+          <li>Pemilihan jadwal dan kursi</li>
+          <li>Penyimpanan tiket lokal</li>
+          <li>Simulasi posisi bus</li>
+          <li>Akun dan riwayat demo</li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h2>Catatan</h2>
+        <ul>
+          <li>Tidak ada pembayaran nyata</li>
+          <li>Tidak ada pelacakan GPS</li>
+          <li>Data hanya tersimpan di browser</li>
+          <li>Pencarian dan filter bus demo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© <span id="footer-year">2026</span> SmartShuttle. Seluruh data adalah contoh.</p>
+      <button class="back-to-top" id="back-to-top" type="button">
+        <span>Kembali ke atas</span>
+        <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up"></use></svg>
+      </button>
+    </div>
+  </footer>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="false"></div>
+
+  <dialog class="app-modal" id="app-modal" aria-labelledby="app-modal-title">
+    <div class="modal-panel">
+      <button class="modal-close" type="button" aria-label="Tutup dialog">
+        <svg class="icon" aria-hidden="true"><use href="#icon-x"></use></svg>
+      </button>
+      <h2 class="modal-title" id="app-modal-title">Informasi</h2>
+      <div class="modal-body" id="app-modal-body"></div>
+      <div class="modal-actions" id="app-modal-footer"></div>
+    </div>
+  </dialog>
+</body>
+</html>

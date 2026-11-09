@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 780" role="img" aria-labelledby="loginJourneyTitle loginJourneyDesc">
+  <title id="loginJourneyTitle">Bus antarkota SmartShuttle di jalan pegunungan</title>
+  <desc id="loginJourneyDesc">Ilustrasi bus antarkota biru dan putih melintasi jalan raya dengan latar pegunungan pada pagi hari.</desc>
+  <defs>
+    <linearGradient id="loginSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8FBFF"/>
+      <stop offset="0.58" stop-color="#E4F0FF"/>
+      <stop offset="1" stop-color="#D3E6FF"/>
+    </linearGradient>
+    <linearGradient id="loginBusBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2B7DF4"/>
+      <stop offset="1" stop-color="#0C4FBF"/>
+    </linearGradient>
+    <linearGradient id="loginGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#31557F"/>
+      <stop offset="1" stop-color="#10264A"/>
+    </linearGradient>
+    <linearGradient id="loginRoad" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#294A70"/>
+      <stop offset="1" stop-color="#183655"/>
+    </linearGradient>
+    <linearGradient id="loginBackMountain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D9E9FF"/>
+      <stop offset="1" stop-color="#C3DBF9"/>
+    </linearGradient>
+    <linearGradient id="loginMidMountain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#B5D3F7"/>
+      <stop offset="1" stop-color="#98C0EE"/>
+    </linearGradient>
+    <linearGradient id="loginFrontMountain" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8DB8EA"/>
+      <stop offset="1" stop-color="#6D9FD8"/>
+    </linearGradient>
+    <filter id="loginBusShadow" x="-20%" y="-20%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="20" stdDeviation="16" flood-color="#10264A" flood-opacity="0.24"/>
+    </filter>
+    <clipPath id="loginBodyClip">
+      <path d="M118 188H558C600 188 627 203 646 238L669 294C675 306 678 319 678 332V376C678 392 665 405 649 405H118C102 405 89 392 89 376V217C89 201 102 188 118 188Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1200" height="780" fill="url(#loginSky)"/>
+  <circle cx="956" cy="154" r="92" fill="#FF9F43" opacity="0.16"/>
+  <circle cx="956" cy="154" r="58" fill="#FFF1E0" opacity="0.9"/>
+
+  <g fill="#FFFFFF" opacity="0.74">
+    <path d="M116 152c4-23 24-39 48-39 22 0 40 13 47 32 17-9 38-2 47 14 4 7 5 15 3 23H72c-3-21 17-39 44-30Z"/>
+    <path d="M760 98c4-18 20-31 39-31 18 0 33 11 38 27 14-7 31-1 38 12 3 6 4 12 2 18H725c-2-17 14-31 35-26Z" opacity="0.72"/>
+  </g>
+
+  <path d="M0 398 82 320l78 44 92-99 94 90 82-120 102 122 84-61 90 87 82-72 98 94 76-58 140 71v116H0Z" fill="url(#loginBackMountain)"/>
+  <path d="m252 265 19-24 18 24-12-5-6 10-6-10Z" fill="#FFFFFF" opacity="0.82"/>
+  <path d="m628 235 21-30 22 29-14-6-8 14-7-13Z" fill="#FFFFFF" opacity="0.78"/>
+  <path d="m982 297 16-23 18 22-11-4-7 10-5-9Z" fill="#FFFFFF" opacity="0.72"/>
+
+  <path d="M0 478 96 406l88 40 112-89 102 91 98-72 110 87 102-93 116 99 96-67 110 86 92-58 68 35v126H0Z" fill="url(#loginMidMountain)"/>
+  <path d="m296 357 18-21 19 22-12-4-7 9-6-9Z" fill="#FFFFFF" opacity="0.64"/>
+
+  <path d="M0 545 102 478l82 46 104-64 92 54 116-75 96 80 102-55 98 62 112-83 94 71 100-41 102 57v138H0Z" fill="url(#loginFrontMountain)"/>
+
+  <g fill="#4F7FAF" opacity="0.42">
+    <path d="m102 534 18-42 18 42h-9l12 28h-16l-9 18-9-18H91l12-28Z"/>
+    <path d="m196 552 14-33 14 33h-7l10 22h-13l-7 14-7-14h-13l10-22Z"/>
+    <path d="m1002 542 17-40 17 40h-8l11 26h-15l-8 17-8-17h-15l11-26Z"/>
+    <path d="m1096 558 13-30 13 30h-6l9 20h-12l-6 13-6-13h-12l9-20Z"/>
+  </g>
+
+  <path d="M0 611c226-40 408-27 618-45 211-18 383-19 582-5v219H0Z" fill="#EDF4FC"/>
+  <path d="M0 651c245-49 455-24 690-47 190-19 328-15 510 8v168H0Z" fill="url(#loginRoad)"/>
+  <path d="M0 651c245-49 455-24 690-47 190-19 328-15 510 8" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.38"/>
+  <path d="M0 706c257-43 456-25 687-45 189-16 333-11 513 10" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-dasharray="34 28" stroke-linecap="round" opacity="0.72"/>
+  <path d="M0 748c278-31 492-21 703-36 182-13 336-8 497 9" fill="none" stroke="#9FB4CB" stroke-width="3" opacity="0.35"/>
+
+  <ellipse cx="588" cy="646" rx="286" ry="21" fill="#0D2543" opacity="0.28"/>
+
+  <g transform="translate(220 230) scale(0.9)" filter="url(#loginBusShadow)">
+    <path d="M118 188H558C600 188 627 203 646 238L669 294C675 306 678 319 678 332V376C678 392 665 405 649 405H118C102 405 89 392 89 376V217C89 201 102 188 118 188Z" fill="#FFFFFF"/>
+    <g clip-path="url(#loginBodyClip)">
+      <path d="M89 310H678V405H89Z" fill="url(#loginBusBlue)"/>
+      <rect x="110" y="214" width="500" height="96" rx="13" fill="url(#loginGlass)"/>
+      <path d="M604 214H622C642 214 656 227 663 247L674 291H604Z" fill="url(#loginGlass)"/>
+      <g fill="#FFFFFF" opacity="0.9">
+        <rect x="173" y="214" width="7" height="96"/>
+        <rect x="237" y="214" width="7" height="96"/>
+        <rect x="301" y="214" width="7" height="96"/>
+        <rect x="365" y="214" width="7" height="96"/>
+        <rect x="429" y="214" width="7" height="96"/>
+        <rect x="493" y="214" width="7" height="96"/>
+        <rect x="557" y="214" width="7" height="96"/>
+      </g>
+      <path d="M126 237 174 214h19l-48 36Z" fill="#FFFFFF" opacity="0.16"/>
+      <path d="m318 246 52-32h15l-52 46Z" fill="#FFFFFF" opacity="0.12"/>
+      <path d="m518 241 40-27h15l-40 40Z" fill="#FFFFFF" opacity="0.12"/>
+      <rect x="119" y="325" width="546" height="2" fill="#FFFFFF" opacity="0.22"/>
+      <text x="119" y="365" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="21" font-weight="700" letter-spacing="4">SMARTSHUTTLE</text>
+      <rect x="118" y="380" width="280" height="5" rx="2.5" fill="#FF9F43"/>
+      <path d="M571 318h33v56h-33Z" fill="#0A47A8" opacity="0.65"/>
+      <rect x="582" y="327" width="10" height="38" rx="4" fill="#9EC2FF" opacity="0.75"/>
+      <path d="M613 199c19 2 34 15 44 36" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.8"/>
+    </g>
+    <path d="M646 238 669 294c6 12 9 25 9 38v18h-20c-8 0-14-6-14-14V238Z" fill="#FF9F43"/>
+    <path d="M656 326h19v14c0 7-6 12-13 12h-6Z" fill="#FFE0B8"/>
+    <path d="M655 362h20" stroke="#FFD08A" stroke-width="9" stroke-linecap="round"/>
+    <path d="M89 337h34v19H89Z" fill="#DC3545"/>
+    <rect x="94" y="343" width="22" height="8" rx="4" fill="#FFD0D5"/>
+    <path d="M89 222h27v88H89Z" fill="#EAF3FF"/>
+    <circle cx="210" cy="403" r="43" fill="#0C1B32"/>
+    <circle cx="210" cy="403" r="25" fill="#94A3B8"/>
+    <circle cx="210" cy="403" r="12" fill="#E2E8F0"/>
+    <circle cx="585" cy="403" r="43" fill="#0C1B32"/>
+    <circle cx="585" cy="403" r="25" fill="#94A3B8"/>
+    <circle cx="585" cy="403" r="12" fill="#E2E8F0"/>
+  </g>
+
+  <g fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity="0.56">
+    <path d="M174 482h45"/>
+    <path d="M142 514h58"/>
+    <path d="M188 546h31"/>
+  </g>
+
+  <g>
+    <rect x="836" y="112" width="252" height="74" rx="18" fill="#FFFFFF"/>
+    <rect x="836" y="112" width="252" height="74" rx="18" fill="none" stroke="#D7E6F8"/>
+    <circle cx="866" cy="149" r="16" fill="#EAF3FF"/>
+    <path d="M866 141c-5 0-9 4-9 9 0 7 9 15 9 15s9-8 9-15c0-5-4-9-9-9Z" fill="#1264E8"/>
+    <circle cx="866" cy="150" r="3" fill="#FFFFFF"/>
+    <text x="892" y="143" fill="#64748B" font-family="Inter, Arial, sans-serif" font-size="11" font-weight="600">RUTE FAVORIT</text>
+    <text x="892" y="163" fill="#10264A" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700">Jakarta → Bandung</text>
+  </g>
+</svg>

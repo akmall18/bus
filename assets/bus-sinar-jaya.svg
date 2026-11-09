@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="sinarTitle sinarDesc">
+  <title id="sinarTitle">Ilustrasi bus Sinar Jaya</title>
+  <desc id="sinarDesc">Bus antarkota demo berwarna biru dengan aksen oranye.</desc>
+  <defs>
+    <linearGradient id="sinarSky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F7FAFF"/>
+      <stop offset="1" stop-color="#DCEAFF"/>
+    </linearGradient>
+    <linearGradient id="sinarBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2E8BFF"/>
+      <stop offset="1" stop-color="#0B4EBB"/>
+    </linearGradient>
+    <linearGradient id="sinarGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#385D86"/>
+      <stop offset="1" stop-color="#122C52"/>
+    </linearGradient>
+    <filter id="sinarShadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#0B2A56" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+  <rect width="720" height="480" rx="28" fill="url(#sinarSky)"/>
+  <circle cx="558" cy="120" r="104" fill="#FFFFFF" opacity="0.85"/>
+  <circle cx="636" cy="212" r="54" fill="#FF9F43" opacity="0.18"/>
+  <path d="M60 126C108 92 150 107 188 82C226 57 272 62 306 90" fill="none" stroke="#BED8FF" stroke-width="12" stroke-linecap="round" opacity="0.7"/>
+  <g opacity="0.55" fill="#C9DFFF">
+    <rect x="44" y="224" width="48" height="126" rx="8"/>
+    <rect x="102" y="196" width="62" height="154" rx="8"/>
+    <rect x="600" y="238" width="50" height="112" rx="8"/>
+    <rect x="660" y="260" width="34" height="90" rx="7"/>
+  </g>
+  <path d="M0 366C124 350 238 366 360 366C492 366 614 348 720 364V480H0Z" fill="#DCE8F7"/>
+  <path d="M0 408H720" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="34 24" opacity="0.9"/>
+  <g filter="url(#sinarShadow)">
+    <path d="M84 154H542C580 154 606 170 624 202L646 248C651 258 654 269 654 280V318C654 334 641 347 625 347H84C68 347 55 334 55 318V184C55 168 68 154 84 154Z" fill="#FFFFFF"/>
+    <path d="M55 264H654V318C654 334 641 347 625 347H84C68 347 55 334 55 318Z" fill="url(#sinarBody)"/>
+    <rect x="76" y="174" width="462" height="74" rx="11" fill="url(#sinarGlass)"/>
+    <path d="M554 174H575C592 174 605 186 612 202L624 238H554Z" fill="url(#sinarGlass)"/>
+    <g fill="#FFFFFF" opacity="0.9">
+      <rect x="138" y="174" width="6" height="74"/>
+      <rect x="200" y="174" width="6" height="74"/>
+      <rect x="262" y="174" width="6" height="74"/>
+      <rect x="324" y="174" width="6" height="74"/>
+      <rect x="386" y="174" width="6" height="74"/>
+      <rect x="448" y="174" width="6" height="74"/>
+      <rect x="510" y="174" width="6" height="74"/>
+    </g>
+    <path d="M90 174L150 248H180L120 174Z" fill="#FFFFFF" opacity="0.12"/>
+    <path d="M268 174L328 248H354L294 174Z" fill="#FFFFFF" opacity="0.1"/>
+    <text x="84" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="3.4">SINAR JAYA</text>
+    <rect x="84" y="314" width="188" height="4" rx="2" fill="#FFBA6B"/>
+    <text x="84" y="333" fill="#BED8FF" font-family="Arial, sans-serif" font-size="10" font-weight="600" letter-spacing="2">ANTARKOTA DEMO</text>
+    <path d="M594 248H623V312H594Z" fill="#083C93" opacity="0.6"/>
+    <rect x="603" y="260" width="8" height="34" rx="4" fill="#9EC2FF" opacity="0.8"/>
+    <path d="M55 292H86V310H55Z" fill="#FF9F43"/>
+    <circle cx="184" cy="346" r="34" fill="#0C1B32"/>
+    <circle cx="184" cy="346" r="20" fill="#94A3B8"/>
+    <circle cx="184" cy="346" r="9" fill="#E2E8F0"/>
+    <circle cx="530" cy="346" r="34" fill="#0C1B32"/>
+    <circle cx="530" cy="346" r="20" fill="#94A3B8"/>
+    <circle cx="530" cy="346" r="9" fill="#E2E8F0"/>
+  </g>
+  <g transform="translate(470 60)">
+    <rect width="188" height="46" rx="14" fill="#FFFFFF" stroke="#DCE8F8"/>
+    <circle cx="23" cy="23" r="9" fill="#EAF3FF"/>
+    <path d="M19 23H27M23 19V27" stroke="#1264E8" stroke-width="2" stroke-linecap="round"/>
+    <text x="42" y="20" fill="#64748B" font-family="Arial, sans-serif" font-size="9" font-weight="600">Operator demo</text>
+    <text x="42" y="34" fill="#10264A" font-family="Arial, sans-serif" font-size="12" font-weight="700">Sinar Jaya</text>
+  </g>
+</svg>

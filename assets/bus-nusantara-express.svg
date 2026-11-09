@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 480" role="img" aria-labelledby="nusaTitle nusaDesc">
+  <title id="nusaTitle">Ilustrasi bus Nusantara Express</title>
+  <desc id="nusaDesc">Bus antarkota demo berwarna indigo dengan aksen sian.</desc>
+  <defs>
+    <linearGradient id="nusaSky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F7F7FF"/>
+      <stop offset="1" stop-color="#E1E4FF"/>
+    </linearGradient>
+    <linearGradient id="nusaBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5A5BE8"/>
+      <stop offset="1" stop-color="#3332A8"/>
+    </linearGradient>
+    <linearGradient id="nusaGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3F4B7A"/>
+      <stop offset="1" stop-color="#171D3A"/>
+    </linearGradient>
+    <filter id="nusaShadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#171A55" flood-opacity="0.23"/>
+    </filter>
+  </defs>
+  <rect width="720" height="480" rx="28" fill="url(#nusaSky)"/>
+  <circle cx="560" cy="118" r="104" fill="#FFFFFF" opacity="0.85"/>
+  <circle cx="638" cy="210" r="54" fill="#22C7DE" opacity="0.18"/>
+  <path d="M60 126C108 92 150 107 188 82C226 57 272 62 306 90" fill="none" stroke="#C8CCFF" stroke-width="12" stroke-linecap="round" opacity="0.8"/>
+  <g opacity="0.5" fill="#CDD2FF">
+    <rect x="44" y="224" width="48" height="126" rx="8"/>
+    <rect x="102" y="196" width="62" height="154" rx="8"/>
+    <rect x="600" y="238" width="50" height="112" rx="8"/>
+    <rect x="660" y="260" width="34" height="90" rx="7"/>
+  </g>
+  <path d="M0 366C124 350 238 366 360 366C492 366 614 348 720 364V480H0Z" fill="#DEE1F1"/>
+  <path d="M0 408H720" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="34 24" opacity="0.9"/>
+  <g filter="url(#nusaShadow)">
+    <path d="M84 154H542C580 154 606 170 624 202L646 248C651 258 654 269 654 280V318C654 334 641 347 625 347H84C68 347 55 334 55 318V184C55 168 68 154 84 154Z" fill="#FFFFFF"/>
+    <path d="M55 264H654V318C654 334 641 347 625 347H84C68 347 55 334 55 318Z" fill="url(#nusaBody)"/>
+    <rect x="76" y="174" width="462" height="74" rx="11" fill="url(#nusaGlass)"/>
+    <path d="M554 174H575C592 174 605 186 612 202L624 238H554Z" fill="url(#nusaGlass)"/>
+    <g fill="#FFFFFF" opacity="0.88">
+      <rect x="138" y="174" width="6" height="74"/>
+      <rect x="200" y="174" width="6" height="74"/>
+      <rect x="262" y="174" width="6" height="74"/>
+      <rect x="324" y="174" width="6" height="74"/>
+      <rect x="386" y="174" width="6" height="74"/>
+      <rect x="448" y="174" width="6" height="74"/>
+      <rect x="510" y="174" width="6" height="74"/>
+    </g>
+    <path d="M90 174L150 248H180L120 174Z" fill="#FFFFFF" opacity="0.13"/>
+    <path d="M268 174L328 248H354L294 174Z" fill="#FFFFFF" opacity="0.1"/>
+    <text x="84" y="300" fill="#FFFFFF" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="3.4">NUSANTARA</text>
+    <rect x="84" y="314" width="166" height="4" rx="2" fill="#5EE4F4"/>
+    <text x="84" y="333" fill="#CFD3FF" font-family="Arial, sans-serif" font-size="10" font-weight="600" letter-spacing="2">EXPRESS · DEMO</text>
+    <path d="M594 248H623V312H594Z" fill="#27268A" opacity="0.62"/>
+    <rect x="603" y="260" width="8" height="34" rx="4" fill="#BEC4FF" opacity="0.75"/>
+    <path d="M55 292H86V310H55Z" fill="#22C7DE"/>
+    <circle cx="184" cy="346" r="34" fill="#11142E"/>
+    <circle cx="184" cy="346" r="20" fill="#969BBA"/>
+    <circle cx="184" cy="346" r="9" fill="#E8EAF5"/>
+    <circle cx="530" cy="346" r="34" fill="#11142E"/>
+    <circle cx="530" cy="346" r="20" fill="#969BBA"/>
+    <circle cx="530" cy="346" r="9" fill="#E8EAF5"/>
+  </g>
+  <g transform="translate(470 60)">
+    <rect width="188" height="46" rx="14" fill="#FFFFFF" stroke="#DEE0F5"/>
+    <circle cx="23" cy="23" r="9" fill="#EBECFF"/>
+    <path d="M19 23H27M23 19V27" stroke="#4747C2" stroke-width="2" stroke-linecap="round"/>
+    <text x="42" y="20" fill="#666B86" font-family="Arial, sans-serif" font-size="9" font-weight="600">Operator demo</text>
+    <text x="42" y="34" fill="#20204A" font-family="Arial, sans-serif" font-size="12" font-weight="700">Nusantara Express</text>
+  </g>
+</svg>
